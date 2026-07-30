@@ -5,12 +5,12 @@ def test_login(setup):
 
     driver = setup
 
-    driver.get("https://example.com")
+    driver.get("https://www.saucedemo.com/")
 
     login = LoginPage(driver)
 
-    login.enter_username("testuser")
-    login.enter_password("password")
+    login.enter_username("standard_user")
+    login.enter_password("secret_sauce")
     login.click_login()
 
-    assert driver.title == "Expected Title"
+    assert "inventory" in driver.current_url

@@ -6,9 +6,9 @@ class LoginPage:
     def __init__(self, driver):
         self.driver = driver
 
-    username = (By.ID, "username")
+    username = (By.ID, "user-name")
     password = (By.ID, "password")
-    login_button = (By.ID, "login")
+    login_button = (By.ID, "login-button")
 
     def enter_username(self, username):
         self.driver.find_element(*self.username).send_keys(username)
