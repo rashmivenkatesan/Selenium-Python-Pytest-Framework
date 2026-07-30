@@ -3,8 +3,10 @@ from selenium import webdriver
 
 
 @pytest.fixture
-def driver():
+def setup():
     driver = webdriver.Chrome()
     driver.maximize_window()
+
     yield driver
+
     driver.quit()
