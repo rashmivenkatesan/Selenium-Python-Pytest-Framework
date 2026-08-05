@@ -3,9 +3,32 @@ import pytest
 from selenium import webdriver
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--browser",
+        action="store",
+        default="chrome",
+        help="Browser to run tests: chrome, firefox, edge"
+    )
+
+
 @pytest.fixture
-def setup():
-    driver = webdriver.Chrome()
+def setup(request):
+
+    browser = request.config.getoption("--browser")
+
+    if browser == "chrome":
+        driver = webdriver.Chrome()
+
+    elif browser == "firefox":
+        driver = webdriver.Firefox()
+
+    elif browser == "edge":
+        driver = webdriver.Edge()
+
+    else:
+        raise Exception(f"Browser '{browser}' is not supported")
+
     driver.maximize_window()
 
     yield driver
