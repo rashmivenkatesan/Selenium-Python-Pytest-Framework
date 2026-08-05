@@ -1,19 +1,27 @@
+import pytest
+
 from pages.login_page import LoginPage
 from utilities.json_reader import read_json
 
 
-def test_login(setup):
+login_data = read_json("testdata/login_data.json")
+
+
+@pytest.mark.parametrize("data", login_data)
+def test_login(setup, data):
 
     driver = setup
-
-    login_data = read_json("testdata/login_data.json")
 
     driver.get("https://www.saucedemo.com/")
 
     login = LoginPage(driver)
 
-    login.enter_username(login_data["username"])
-    login.enter_password(login_data["password"])
+    login.enter_username(data["username"])
+    login.enter_password(data["password"])
     login.click_login()
 
-    assert "inventory" in driver.current_url
+    if data["expected"] == "success":
+        assert "inventory" in driver.current_url
+
+    else:
+        assert "Epic sadface" in driver.page_source
